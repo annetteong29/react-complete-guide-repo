@@ -25,9 +25,26 @@ class Persons extends Component {
     //     console.log('[Persons.js] componentWillReceiveProps');
     // }
 
+    // if return true, whenever re-rendered, will update
     shouldComponentUpdate(nextProps, nextState) {
         console.log('[Persons.js] shouldComponentUpdate');
-        return true;
+        // prevents re-rendering:
+        // both Persons and Cockpit are children of App
+        // even if only Cockpit is updated, everything will be re-rendered
+        // so check (before re-rendering) if values are same
+        // if they are same, return false i.e. no need to update
+        //
+        // * works when nextProps.persons POINTS to object
+        // if not duplicated eg. using spread (in nameChangedHandler),
+        // will not work because both will be pointing to same object in memory
+        if (nextProps.persons !== this.props.persons) {
+            return true;
+        } else
+        return false;
+
+        // to check ALL props being checked for a component, use PureComponent
+        // (in this case, for Person component, 
+        // this.props.persons, this.props.clicked, this.props.changed)
     }
 
     getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -42,6 +59,10 @@ class Persons extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log('[Persons.js] componentDidUpdate');
         console.log(snapshot);
+    }
+
+    componentWillUnmount() {
+        console.log('[Persons.js] componentWillUnmount');
     }
 
     render() {
