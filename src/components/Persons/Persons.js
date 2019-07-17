@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { PureComponent } from 'react';
 import Person from './Person/Person';
 
 // functional (not class-based) component 
@@ -6,46 +6,18 @@ import Person from './Person/Person';
 
 // props will contain array of Person.s that we transform to JSX
 // const persons =  (props) => { & no render()
-class Persons extends Component {
+class Persons extends PureComponent {
 
-    // static getDerivedStateFromProps(props, state) {
-    //     console.log('[Persons.js] getDerivedStateFromProps');
-    //     return state;
-    // }
-    //
-    // warning msg:
-    // if use, should define initial state by assigning object
-    // to this.state in constructor of Persons, to ensure
-    // getDerivedStateFromProps args have consistent shape
-    // 
-    // since Persons doesn't use a constructor, 
-    // doesn't make sense to include this
-
-    // componentWillReceiveProps(props) {
-    //     console.log('[Persons.js] componentWillReceiveProps');
-    // }
-
-    // if return true, whenever re-rendered, will update
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log('[Persons.js] shouldComponentUpdate');
-        // prevents re-rendering:
-        // both Persons and Cockpit are children of App
-        // even if only Cockpit is updated, everything will be re-rendered
-        // so check (before re-rendering) if values are same
-        // if they are same, return false i.e. no need to update
-        //
-        // * works when nextProps.persons POINTS to object
-        // if not duplicated eg. using spread (in nameChangedHandler),
-        // will not work because both will be pointing to same object in memory
-        if (nextProps.persons !== this.props.persons) {
-            return true;
-        } else
-        return false;
-
-        // to check ALL props being checked for a component, use PureComponent
+    // to check ALL props being checked for a component
         // (in this case, for Person component, 
         // this.props.persons, this.props.clicked, this.props.changed)
-    }
+
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     if (nextProps.persons !== this.props.persons) {
+    //         return true;
+    //     } else
+    //     return false;
+    // }
 
     getSnapshotBeforeUpdate(prevProps, prevState) {
         console.log('[Persons.js] getSnapshotBeforeUpdate');
