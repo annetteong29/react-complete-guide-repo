@@ -1,4 +1,6 @@
 import React, {Component } from 'react';
+import PropTypes from 'prop-types';
+
 import classes from './Person.module.css';
 import Aux from '../../../hoc/Aux';
 import withClass from '../../../hoc/withClass';
@@ -19,5 +21,15 @@ class Person extends Component {
         );
     }
 }
+
+// special property you add to any JS component object that 
+// React will watch out for in development mode and warn you
+// if you pass in incorrect props
+Person.propTypes = {
+    click: PropTypes.func,
+    name: PropTypes.string,
+    age: PropTypes.number,
+    changed: PropTypes.func
+};
 
 export default withClass(Person, classes.Person);
