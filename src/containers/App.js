@@ -29,7 +29,8 @@ class App extends Component {
     ],
     otherState: 'some other value', 
     showPersons: false,
-    showCockpit: true
+    showCockpit: true,
+    changeCounter: 0
   } 
 
 
@@ -74,15 +75,25 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
-    this.setState({ persons: persons });
-  }
+    this.setState((prevState, props) => {
+      // just setting changeCounter: this.state.changeCounter+1
+      // without using function
+      // does not guarantee 100% accuracy (relies on old value)
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1 
+      };
+    });
+  };
 
   deletePersonHandler = (personIndex) => {
     // const persons = this.state.persons.slice();
     const persons = [...this.state.persons]
     persons.splice(personIndex, 1); // removes 1 element from array at personIndex
-    this.setState({persons: persons})
-  }
+    this.setState({
+      persons: persons
+    });
+  };
 
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
