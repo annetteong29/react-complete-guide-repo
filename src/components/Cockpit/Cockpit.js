@@ -5,10 +5,9 @@ import AuthContext from '../../context/auth-context';
 // functional component
 const Cockpit = (props) => {
     const toggleBtnRef = React.useRef(null);
+    const authContext = React.useContext(AuthContext);
 
-    // no need getDerivedStateFromProps because 
-    // can use useState() to base the state on props
-    // (has props since functional component)
+    console.log(authContext.authenticated);
 
     // runs for every update/render cycle
     useEffect(() => { 
@@ -52,13 +51,9 @@ const Cockpit = (props) => {
                 ref={toggleBtnRef}>
                 Toggle Persons
             </button>
-            <AuthContext.Consumer>
-                {(context) => 
-                // login property holds reference to login in value 
-                // in AuthContext.Provider in App.js
-                    <button onClick={context.login}>Login</button>
-                }
-            </AuthContext.Consumer>
+            {/* login property holds reference to login in value 
+            in AuthContext.Provider in App.js */}
+            <button onClick={authContext.login}>Login</button>
         </div>
     );
 };
