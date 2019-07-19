@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import classes from './Cockpit.module.css';
+import AuthContext from '../../context/auth-context';
 
 // functional component
 const Cockpit = (props) => {
@@ -51,7 +52,13 @@ const Cockpit = (props) => {
                 ref={toggleBtnRef}>
                 Toggle Persons
             </button>
-            <button onClick={props.login}>Login</button>
+            <AuthContext.Consumer>
+                {(context) => 
+                // login property holds reference to login in value 
+                // in AuthContext.Provider in App.js
+                    <button onClick={context.login}>Login</button>
+                }
+            </AuthContext.Consumer>
         </div>
     );
 };
