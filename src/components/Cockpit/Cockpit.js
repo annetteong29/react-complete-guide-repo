@@ -3,18 +3,16 @@ import classes from './Cockpit.module.css';
 
 // functional component
 const Cockpit = (props) => {
+    const toggleBtnRef = React.useRef(null);
+
     // no need getDerivedStateFromProps because 
     // can use useState() to base the state on props
     // (has props since functional component)
 
-    // runs for every update
+    // runs for every update/render cycle
     useEffect(() => { 
         console.log('[Cockpit.js] useEffect'); 
-        // HTTP request can be sent here...
-        // const timer = 
-        // setTimeout( () => {
-        //     alert('Saved data to cloud!');
-        // }, 1000 );
+        toggleBtnRef.current.click();
         // runs only when component unmounts, because of empty array in second param
         return () => {
             // eg of cleanup work in useEffect
@@ -49,8 +47,10 @@ const Cockpit = (props) => {
         <div className={classes.Cockpit}>
             <h1>{props.title}</h1>
             <p className={assignedClasses.join(' ')}>This is really working!</p>
-            <button className={btnClass}
-            onClick={props.toggle}>Toggle Persons</button>
+            <button className={btnClass} onClick={props.toggle}
+                ref={toggleBtnRef}>
+                Toggle Persons
+            </button>
         </div>
     );
 };
